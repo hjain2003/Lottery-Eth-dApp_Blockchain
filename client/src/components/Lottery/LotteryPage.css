@@ -1,0 +1,73 @@
+.full_page{
+    height: 100vh;
+    width:100%;
+}
+nav{
+    position: absolute;
+    top:0;
+    background-color: black;
+    color: white;
+    /* padding: 10px; */
+    height: 60px;
+    line-height: 60px;
+    width: 100%;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+nav h2{
+    margin-left: 20px;
+}
+#connect_wallet{
+    color: white;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(2, 131, 88);
+    cursor: pointer;
+    padding: 10px;
+    font-size: 15px;
+    margin-right: 20px;
+}
+.container{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    border: 2px solid black;    
+    border-radius: 50px;
+}
+
+.enter_box{
+    color: white;
+    background-color: black;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.container_btn{
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+#winner_btn{
+    background-color: rgb(203, 173, 2);
+}
+#enter_btn{
+    background-color: red;
+}
+
+.players{
+    display: flex;
+    flex-direction: column;
+}
