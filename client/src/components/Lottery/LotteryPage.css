@@ -40,6 +40,8 @@ nav h2{
     padding: 25px;
     border: 2px solid black;    
     border-radius: 50px;
+    justify-content: center;
+    align-items: center;
 }
 
 .enter_box{
