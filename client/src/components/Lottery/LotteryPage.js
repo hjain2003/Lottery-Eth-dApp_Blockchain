@@ -12,11 +12,16 @@ const LotteryPage = () => {
   const [players, setPlayers] = useState([]);
   const [address, setAddress] = useState();
   const [ltContract, setLtContract] = useState();
+  const [loadingMsg,setLoadingMsg] = useState('');
+  const [totalPool,setTotalPool] = useState();
+  const [winner, setWinner] = useState('');
+
 
   useEffect(() => {
     if (address) {
       fetchBalance();
       getPlayers();
+      getTotalPool();
     }
     // fetchPlayers();
   }, [address]);
@@ -41,19 +46,62 @@ const LotteryPage = () => {
 
 
   const enterLottery = async () => {
+    setLoadingMsg('Pending...');
     try {
       await ltContract.methods.enter().send({
         from: address,
         value: web3.utils.toWei('0.01', 'ether'),  // Set the value in wei
         gas: 5000000,
       });
+      setLoadingMsg('');
     } catch (error) {
+      setLoadingMsg('');
       console.log(error);
     }
   }
 
+  const getTotalPool = async () => {
+    if (web3 && ltContract) {
+      try {
+        const contractBalance = await web3.eth.getBalance(ltContract.options.address);
+        const etherBalance = web3.utils.fromWei(contractBalance, 'ether');
+        setTotalPool(etherBalance);
+      } catch (err) {
+        console.log('Error fetching contract balance:', err);
+      }
+    }
+  }
 
+  const pickWinner = async () => {
+    setLoadingMsg('Picking Winner...');
+    try {
+      await ltContract.methods.pickWinner().send({
+        from: address,
+        gas: 5000000,
+      });
   
+      // Retrieve the winner's address
+      const winnerAddress = await ltContract.methods.randomResult().call();
+      setWinner(winnerAddress);
+  
+      // Send the contract's balance to the winner
+      await ltContract.methods.payWinner().send({
+        from: address,
+        gas: 5000000,
+      });
+  
+      setLoadingMsg('');
+    } catch (error) {
+      setLoadingMsg('');
+      console.log(error);
+    }
+  }
+  
+
+const handlePickWinner=()=>{
+  pickWinner();
+}
+
   const connectWallet =async() =>{
     // Check if MetaMask is installed
     if(typeof window !== 'undefined' && typeof window.ethereum !=='undefined'){
@@ -99,13 +147,16 @@ const LotteryPage = () => {
           <div className="enter_box">
             <span>Ticket Cost : 0.01 ETH</span>
             <br />
-            <span>Current Total Pool : </span>
+            <span>Current Total Pool : {totalPool}  ETH</span>
             <br />
             <button id="enter_btn" className='container_btn' onClick={enterLottery}>Enter</button>
             <br />
-            <button className='container_btn' id="winner_btn">Pick Winner</button>
+            <button className='container_btn' id="winner_btn" onClick={handlePickWinner}>Pick Winner</button>
           </div>
           <br />
+          <span id="winner_Add">{winner}</span>
+          <br />
+          {loadingMsg}
           <b>Players : </b>
           <div className="players">
             {players.map((player, index) => (
