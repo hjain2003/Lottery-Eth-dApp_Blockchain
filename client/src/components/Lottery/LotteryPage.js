@@ -53,6 +53,7 @@ const LotteryPage = () => {
         value: web3.utils.toWei('0.01', 'ether'),  // Set the value in wei
         gas: 5000000,
       });
+      window.alert("Entry successfull");
       setLoadingMsg('');
     } catch (error) {
       setLoadingMsg('');
@@ -80,9 +81,13 @@ const LotteryPage = () => {
         gas: 5000000,
       });
   
-      // Retrieve the winner's address
-      const winnerAddress = await ltContract.methods.randomResult().call();
+      // Retrieve the winner's index
+      const randomResult = await ltContract.methods.randomResult().call();
+      const winnerIndex = Number(randomResult) % players.length;
+      const winnerAddress = players[winnerIndex];
+      console.log(winnerAddress);
       setWinner(winnerAddress);
+      setLoadingMsg('Paying Winner...');
   
       // Send the contract's balance to the winner
       await ltContract.methods.payWinner().send({
@@ -96,6 +101,8 @@ const LotteryPage = () => {
       console.log(error);
     }
   }
+  
+  
   
 
 const handlePickWinner=()=>{
@@ -154,6 +161,7 @@ const handlePickWinner=()=>{
             <button className='container_btn' id="winner_btn" onClick={handlePickWinner}>Pick Winner</button>
           </div>
           <br />
+          Winner : 
           <span id="winner_Add">{winner}</span>
           <br />
           {loadingMsg}
