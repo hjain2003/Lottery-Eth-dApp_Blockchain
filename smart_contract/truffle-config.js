@@ -1,11 +1,11 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const privateKeys = ['3061357d8958844656c9c148365d59c548500a7412021ce3a7b02c184ec7aaff'];
+const privateKeys = ['#####################################'];
 
 module.exports = {
   networks: {
     sepolia: {
       provider: () => new HDWalletProvider({
-        privateKeys: ['3061357d8958844656c9c148365d59c548500a7412021ce3a7b02c184ec7aaff'], // Replace with your private key
+        privateKeys: ['########################################'], // Replace with your private key
         providerOrUrl: 'https://ethereum-sepolia.publicnode.com', // Sepolia RPC URL
       }),
       network_id: 11155111, // Sepolia network ID
@@ -17,7 +17,7 @@ module.exports = {
 
     sepoliaTest: {
       provider: () => new HDWalletProvider({
-        privateKeys: ['e7f5ff9ffcb41aeb813ec9b9e7bdde30cec2c26c94ecd57af9f3e98876afbf40'], // Replace with your private key
+        privateKeys: ['###################################'], // Replace with your private key
         providerOrUrl: 'https://ethereum-sepolia.blockpi.network/v1/rpc/public', // Sepolia testnet RPC URL
       }),
       network_id:  11155111, // Sepolia testnet network ID
@@ -31,7 +31,7 @@ module.exports = {
 
     polygon: {
       provider: () => new HDWalletProvider({
-        privateKeys: ['3061357d8958844656c9c148365d59c548500a7412021ce3a7b02c184ec7aaff'], // Replace with your private key
+        privateKeys: ['###################################'], // Replace with your private key
         providerOrUrl: 'https://rpc-mumbai.maticvigil.com',
       }),
       network_id: 80001, // Polygon network ID
